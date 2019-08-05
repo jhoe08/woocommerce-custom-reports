@@ -1,0 +1,172 @@
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+*:focus{
+	outline: none;
+}
+
+.cru-reports-categories{
+	display: flex;
+}
+
+.cru-reports-categories-tab{
+	float: left;
+	border: 1px solid #ccc;
+	background-color: #f1f1f1;
+	width: 20%;
+	height: 1000px;
+	overflow: hidden;
+	overflow-y: scroll;
+	margin: 0;
+	position: relative;
+	z-index: 1;
+}
+.cru-reports-categories-tab li{
+	display: flex;
+	align-items: center;
+}
+.cru-reports-categories-tab li:hover{
+	background-color: #dcdcdc;
+}
+
+.cru-reports-categories-tab button{
+	cursor: pointer;
+}
+.cru-reports-category-tab{
+	display: block;
+	background-color: inherit;
+	color: black;
+	padding: 22px 16px;
+	width: 100%;
+	border: none;
+	outline: none;
+	text-align: left;
+	cursor: pointer;
+	transition: 0.3s;
+	text-decoration: none;
+}
+.cru-reports-category-tab span{
+	float: right;
+}
+.cru-reports-sub-category-tab{
+	padding-left: 40px;
+}
+/* endof child */
+
+.cru-reports-sub-categories-tab{
+	display: none;
+}
+.cru-reports-categories-info{
+	float: left;
+	padding: 0px 12px;
+	border: 1px solid #ccc;
+	width: 78%;
+	border-left: none;
+	height: 1000px;
+	overflow: hidden;
+	overflow-y: scroll;
+	margin: 0;
+}
+.cru-reports-category-info,
+.cru-reports-product-info{
+	display: flex;
+	border-bottom: 1px solid #ccc;
+}
+.cru-reports-category-head,
+.cru-reports-product-head{
+	width: 80%;
+}
+.cru-reports-category-sales,
+.cru-reports-product-sales{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    float: left;
+    width: 20%;    
+}
+.cru-reports-category-sales p,
+.cru-reports-product-sales p{
+    border-left: 1px solid #ccc;
+    flex: 1 0 0;
+}
+.cru-reports-category-sales p:last-child,
+.cru-reports-product-sales p:last-child{
+	/*border: none;*/
+}
+.cru-reports-category-sales p span,
+.cru-reports-product-sales p span{
+	display: block;
+	font-weight: 900;	
+	font-size: 1vw;
+}
+.btn.download-reports{
+	padding: 15px;
+}
+.btn.all.download-reports,
+.cru-reports-product-info.head,
+.cru-reports-category-info{
+    position: sticky;
+    top: 0;
+    background-color: #f1f1f1;
+    z-index: 2;
+}
+
+.cru-reports-product-info:not(.head) label{
+	display: none;
+}
+
+/* Download Button */
+.btn.all.download-reports button{
+	width: 100%;
+	padding: 10px;
+}
+
+
+
+/* Media queries */
+
+@media (max-width: 1199px) and (min-width: 768px){
+	.cru-reports-categories-tab,
+	.cru-reports-category-sales, .cru-reports-product-sales{
+		width: 40%;
+	}
+}
+
+@media (max-width: 767px) and (min-width: 521px){
+	.cru-reports-categories-tab{
+		width: 60%;
+	}
+	.cru-reports-category-sales, .cru-reports-product-sales{
+		width: 40%;
+	}
+
+}
+
+@media (max-width: 520px){
+	.cru-reports-categories{
+		display: inline-block;
+		width: 100%;
+	}
+	.cru-reports-categories-tab{
+		width: 100%;
+		height: 250px;		
+	}
+
+	.btn.all.download-reports button{
+		width: 100%;
+		margin-bottom: 16px;
+		padding: 10px;
+	}
+
+	.cru-reports-categories-info{
+		width: 100%;
+		height: 750px;
+	}
+	.cru-reports-category-sales, .cru-reports-product-sales{
+		width: 50%;
+	}
+	.cru-reports-category-sales p span, .cru-reports-product-sales p span{
+		font-size: 14px;
+	}
+}
