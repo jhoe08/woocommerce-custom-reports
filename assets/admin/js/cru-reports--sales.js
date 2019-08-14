@@ -48,10 +48,12 @@
 		var obj = $(this).parent().parent().attr('data-json'),
 			data = JSON.parse(obj);
     	
+		console.log( data );
+
 		var args = {
     		action : 'crureports_get_products_by_category',
-    		// category_id : data.term_id,
-    		// taxonomy: data.taxonomy,
+    		category_id : data.term_id,
+    		taxonomy: data.taxonomy,
     		startDate: $('input[name="cru-reports-daterange-from"]').attr('value'),
     		endDate: $('input[name="cru-reports-daterange-to"]').attr('value'),
     		download: true
@@ -63,8 +65,10 @@
 			data: args,
 			success : function( response ){
 
-				var getUrl = window.location.href;
-				window.open( getUrl ,"_self");
+				console.log( response );
+
+				 var getUrl = window.location.href;
+				 window.open( getUrl ,"_self");
 			},
 			error : function( error ){ console.log( error ); }
 		});

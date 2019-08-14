@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 class Cruclub_Reports_Controller {
 
 	// Additional Custom Taxonomy
-	const taxonomy = array( 'product_cat', 'wine_type' );
+	const taxonomy = array( 'product_cat' );
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -227,20 +227,26 @@ class Cruclub_Reports_Controller {
 
 				$posts = json_decode( json_encode( $posts ), true);
 
-				//error_log(print_r(gettype( $posts ), true));
+				if( $to_download === true ){
 
-				if( $to_download ){
-
-					$category_name =  'Category: '.get_term( $category_id )->name;
-
+					$category_name = $category_id ? 'Category: '. get_term( $category_id )->name : 'All Products';
 					$csv_result = array();
 					$csv_result[] = array( $category_name, 'Quantity',	'Amount' );
-
-					// error_log(print_r( get_term( $category_id ), true ));
 				}				
 
 				$sales_qty = 0;
 				$sales_amt = 0;
+
+				foreach($posts as $key => $product) {
+					if( !array_key_exists('sales', $posts) ){
+						$posts[$key]['sales']['quantity'] = 0;
+						$posts[$key]['sales']['total'] = 0;
+					}
+				}
+
+				foreach ($sales as $key => $sale) {
+					$productids[] = $key;
+				}
 
 				foreach($posts as $key => $product) {
 
@@ -248,24 +254,28 @@ class Cruclub_Reports_Controller {
 
 					$product_id = $product['ID'];
 					$product_title = $product['post_title'];
+ 
+					if ( !in_array( $product_id, $productids ) ) {
+						continue;
+					}
 
 					$sales_qty += $posts[$key]['sales']['quantity'] = (int) $sales[ $product_id ]['quantity'];
 					$sales_amt += $posts[$key]['sales']['total'] = (float) $sales[ $product_id ]['line_total'];
-					
-					if( $to_download ){
+
+					if( $to_download === true ){
 						
-						$csv_result[] = array( $product_title, $posts[$key]['sales']['quantity'], $posts[$key]['sales']['total'] );
+						$csv_result[] = array( (string) $product_title, (int) $posts[$key]['sales']['quantity'], (float) $posts[$key]['sales']['total'] );
 					}					
 				}
 
-				if( $to_download ){
+				if( $to_download === true ){
 					
 					$as_of_date = $startDate. ' to '.$endDate;
 					$csv_result[] = array( 'Total Sales as of '.$as_of_date, $sales_qty, $sales_amt);
 
 					$filename = $taxonomy .'-'. preg_replace( "![^a-z0-9]+!i", '-', strtolower( $category_name ) );
 
-					echo json_encode( $this->generateCsv( $csv_result, $filename ) );
+					$this->generateCsv( $csv_result, $filename );
 				}
 
 			echo json_encode($posts);
