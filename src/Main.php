@@ -81,8 +81,13 @@ class Main {
 		$this->loader->add_action('admin_menu', $plugin_admin, 'crureports_add_menu');
 
 		//function used Ajax
-		$this->loader->add_action( 'wp_ajax_crureports_get_products_by_category', $plugin_admin, 'crureports_get_products_by_category' );
-		$this->loader->add_action( 'wp_ajax_nopriv_crureports_get_products_by_category', $plugin_admin, 'crureports_get_products_by_category' );	
+		// $this->loader->add_action( 'wp_ajax_crureports_get_products_by_category', $plugin_admin, 'crureports_get_products_by_category' );
+		// $this->loader->add_action( 'wp_ajax_nopriv_crureports_get_products_by_category', $plugin_admin, 'crureports_get_products_by_category' );	
+
+		$this->loader->add_action( 'wp_ajax_crureports_get_sales_report', $plugin_admin, 'crureports_get_sales_report' );
+		$this->loader->add_action( 'wp_ajax_nopriv_crureports_get_sales_report', $plugin_admin, 'crureports_get_sales_report' );
+
+		
 
 	}
 }

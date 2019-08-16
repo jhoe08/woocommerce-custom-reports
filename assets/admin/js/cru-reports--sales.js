@@ -14,29 +14,36 @@
 		//event.preventDefault();
 		cru_products_info();
 
-	});
-
+	});	
 
 	// Category Tab
-	$( document ).on( 'click', 'a.cru-reports-category-tab', function( event ){
+	$( document ).on( 'click', 'ul.categories > li > a', function( event ){
 	
 		event.preventDefault();
 
-		var category_head = $('.cru-reports-category-head'),
+		if ( $(this).hasClass('cru-reports-category-tab') ){
+			
+			var category_head = $('.cru-reports-category-head'),
 			obj = $(this).parent().attr('data-json'),
 			data = JSON.parse(obj);
 
-		category_head.find('h3').text( (data.name).toLowerCase() );
-		category_head.find('p > em').text( ( data.description !== '' ) ? data.description : 'No category description' );
+			category_head.find('h3').text( (data.name).toLowerCase() );
+			category_head.find('p > em').text( ( data.description !== '' ) ? data.description : 'No category description' );
+	    	
+			cru_products_info( data );
+
+		} else {
+
+			cru_products_info();
+
+		}
 
 		// set active to current category selected
-		$('.parent-category').removeClass('active');
+		$('ul.categories > li').removeClass('active');
 		$(this).parent().addClass('active');
 
 		// reset
 		$("#has_sales"). prop("checked", false);
-    	
-		cru_products_info( data );
 
 	});
 	
@@ -45,19 +52,28 @@
 	
 		event.preventDefault();
 
-		var obj = $(this).parent().parent().attr('data-json'),
+		var _this = $(this);
+
+		if( $(this).parent().hasClass('all') ){
+		} else {
+			var obj = $(this).parent().parent().attr('data-json'),
 			data = JSON.parse(obj);
-    	
-		console.log( data );
+		}
 
 		var args = {
-    		action : 'crureports_get_products_by_category',
-    		category_id : data.term_id,
-    		taxonomy: data.taxonomy,
+    		action : 'crureports_get_sales_report',
+    		// category_id : data.term_id,
+    		// taxonomy: data.taxonomy,
     		startDate: $('input[name="cru-reports-daterange-from"]').attr('value'),
     		endDate: $('input[name="cru-reports-daterange-to"]').attr('value'),
     		download: true
     	};
+
+		if( $(this).parent().hasClass('all') ){
+		} else {
+			args['category_id'] = data.term_id;
+			args['taxonomy'] = data.taxonomy;
+		}
 
 		$.ajax({
 			method: 'GET', // the method (could be GET btw)
@@ -65,10 +81,19 @@
 			data: args,
 			success : function( response ){
 
-				console.log( response );
+				var getUrl = window.location.href;				
+				var download_link = '&download=' + args['download'] + '&startDate=' + args['startDate'] + '&endDate=' + args['endDate'];
 
-				 var getUrl = window.location.href;
-				 window.open( getUrl ,"_self");
+				if( $(_this).parent().hasClass('all') ){	
+					console.log( $(this) );
+				} else {
+
+						console.log( args['category_id'] );
+						console.log( args['taxonomy'] );
+					download_link += ( ( args['category_id'] != 'undefined' ) ? ( '&category_id=' + args['category_id'] ) : '' )  + ( ( args['taxonomy'] != 'undefined' ) ? ( '&taxonomy=' + args['taxonomy'] ) : '' );
+				}
+
+				window.open( getUrl + download_link ,'_self');
 			},
 			error : function( error ){ console.log( error ); }
 		});
@@ -125,7 +150,8 @@
 		
 
 		var args = {
-			action : 'crureports_get_products_by_category',			
+			//action : 'crureports_get_products_by_category',
+			action : 'crureports_get_sales_report',
 			startDate: $('input[name="cru-reports-daterange-from"]').attr('value'),
 			endDate: $('input[name="cru-reports-daterange-to"]').attr('value')
 		};	

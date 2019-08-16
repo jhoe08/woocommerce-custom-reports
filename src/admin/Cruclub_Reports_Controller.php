@@ -92,6 +92,18 @@ class Cruclub_Reports_Controller {
 	 */
 	public function crureports_html_callback(){
 
+		if( isset( $_GET['download'] ) ){
+
+			$category_id = isset( $_GET['category_id'] ) ? $_GET['category_id'] : false;
+			$taxonomy = isset( $_GET['taxonomy'] ) ? $_GET['taxonomy'] : '';
+			$startDate = isset( $_GET['startDate'] ) ? $_GET['startDate'] : false;
+			$endDate = isset( $_GET['endDate'] ) ? $_GET['endDate'] : false;
+			$to_download = isset( $_GET['download'] ) ? $_GET['download'] : false;
+
+			//$this->crureports_get_download( $category_id, $taxonomy, $startDate, $endDate, $to_download );
+			$this->crureports_get_products_by_category( $category_id, $taxonomy, $startDate, $endDate, $to_download );
+		}
+
 		echo '<div class="wrap">';
 		echo '<h2>' . __( 'CRU Reports', 'cru-reports' ) . '</h2>';
 		
@@ -104,6 +116,11 @@ class Cruclub_Reports_Controller {
 
 
 		$taxonomies = $this->crureports_get_taxonomies();
+
+		echo '<li class="show-all-products active">';
+			echo '<a href="#" class="cru-reports-all-products-tab">Show All Products</a>';
+			echo '<div class="btn download-reports all"><button type="button" onclick="" title="Download CSV"><span class="dashicons dashicons-download"></span></button></div>';
+			echo '</li>';
 
 		foreach ($taxonomies as $key => $taxonomy) {
 			$data = htmlspecialchars(json_encode($taxonomy), ENT_QUOTES, 'UTF-8');
@@ -170,19 +187,42 @@ class Cruclub_Reports_Controller {
 	}
 
 	/**
-	 * Retrieve all Products under a Category
+	 * Display data needed and AJAX Callback
 	 *
 	 * @since 		1.0.0
 	 * @param 		$args, $category_id, $products
 	 * @return 		products
 	 */
-	public function crureports_get_products_by_category(){
+
+	public function crureports_get_sales_report(){
 
 		$category_id = isset( $_REQUEST['category_id'] ) ? $_REQUEST['category_id'] : false;
 		$taxonomy = isset( $_REQUEST['taxonomy'] ) ? $_REQUEST['taxonomy'] : false;
 		$startDate = isset( $_REQUEST['startDate'] ) ? $_REQUEST['startDate'] : false;
 		$endDate = isset( $_REQUEST['endDate'] ) ? $_REQUEST['endDate'] : false;
 		$to_download = isset( $_REQUEST['download'] ) ? $_REQUEST['download'] : false;
+
+		$this->crureports_get_products_by_category( $category_id, $taxonomy, $startDate, $endDate, $to_download );
+
+		wp_reset_postdata();
+		die;
+	}
+
+	/**
+	 * Retrieve all Products under a Category
+	 *
+	 * @since 		1.0.0
+	 * @param 		$args, $category_id, $products
+	 * @return 		products
+	 */
+
+	public function crureports_get_products_by_category( $category_id = false, $taxonomy = '', $startDate, $endDate, $to_download ){
+
+		$category_id = ( $to_download ) ? $category_id : isset( $_REQUEST['category_id'] ) ? $_REQUEST['category_id'] : false;
+		$taxonomy = ( $to_download ) ? $taxonomy : isset( $_REQUEST['taxonomy'] ) ? $_REQUEST['taxonomy'] : false;
+		$startDate = ( $to_download ) ? $startDate : isset( $_REQUEST['startDate'] ) ? $_REQUEST['startDate'] : false;
+		$endDate = ( $to_download ) ? $endDate : isset( $_REQUEST['endDate'] ) ? $_REQUEST['endDate'] : false;
+		$to_download = ( $to_download ) ? $to_download : isset( $_REQUEST['download'] ) ? $_REQUEST['download'] : false;
 
 		$args = array(
 			'orderby' => 'name',
@@ -220,65 +260,69 @@ class Cruclub_Reports_Controller {
 
 		if( $products->have_posts() ){
 				
-				$productids = array();
-				$posts = $products->get_posts();
+			$productids = array();
+			$posts = $products->get_posts();
 
-				$sales = $this->crureports_get_product_sales( $startDate, $endDate );
+			$sales = $this->crureports_get_product_sales( $startDate, $endDate );
 
-				$posts = json_decode( json_encode( $posts ), true);
+			$posts = json_decode( json_encode( $posts ), true);
 
-				if( $to_download === true ){
+			if( $to_download ){
 
-					$category_name = $category_id ? 'Category: '. get_term( $category_id )->name : 'All Products';
-					$csv_result = array();
-					$csv_result[] = array( $category_name, 'Quantity',	'Amount' );
-				}				
+				$category_name = $category_id ? 'Category: '. get_term( $category_id )->name : 'All Products';
+				$csv_result = array();
+				$csv_result[] = array( $category_name, 'Total Quantity', 'Total Amount' );
+			}
 
-				$sales_qty = 0;
-				$sales_amt = 0;
+			$sales_qty = 0;
+			$sales_amt = 0;
 
-				foreach($posts as $key => $product) {
-					if( !array_key_exists('sales', $posts) ){
-						$posts[$key]['sales']['quantity'] = 0;
-						$posts[$key]['sales']['total'] = 0;
-					}
+			foreach($posts as $key => $product) {
+				if( !array_key_exists('sales', $posts) ){
+					$posts[$key]['sales']['quantity'] = 0;
+					$posts[$key]['sales']['total'] = 0;
+				}
+			}
+
+			foreach ($sales as $key => $sale) {
+				$productids[] = $key;
+			}
+
+			foreach($posts as $key => $product) {
+
+				// error_log(print_r( $product, true ));
+
+				$product_id = $product['ID'];
+				$product_title = $product['post_title'];
+
+				if ( !in_array( $product_id, $productids ) ) {
+					continue;
 				}
 
-				foreach ($sales as $key => $sale) {
-					$productids[] = $key;
-				}
+				$sales_qty += $posts[$key]['sales']['quantity'] = (int) $sales[ $product_id ]['quantity'];
+				$sales_amt += $posts[$key]['sales']['total'] = (float) $sales[ $product_id ]['line_total'];
 
-				foreach($posts as $key => $product) {
-
-					// error_log(print_r( $product, true ));
-
-					$product_id = $product['ID'];
-					$product_title = $product['post_title'];
- 
-					if ( !in_array( $product_id, $productids ) ) {
-						continue;
-					}
-
-					$sales_qty += $posts[$key]['sales']['quantity'] = (int) $sales[ $product_id ]['quantity'];
-					$sales_amt += $posts[$key]['sales']['total'] = (float) $sales[ $product_id ]['line_total'];
-
-					if( $to_download === true ){
-						
-						$csv_result[] = array( (string) $product_title, (int) $posts[$key]['sales']['quantity'], (float) $posts[$key]['sales']['total'] );
-					}					
-				}
-
-				if( $to_download === true ){
+				if( $to_download ){
 					
-					$as_of_date = $startDate. ' to '.$endDate;
-					$csv_result[] = array( 'Total Sales as of '.$as_of_date, $sales_qty, $sales_amt);
-
-					$filename = $taxonomy .'-'. preg_replace( "![^a-z0-9]+!i", '-', strtolower( $category_name ) );
-
-					$this->generateCsv( $csv_result, $filename );
+					$csv_result[] = array( (string) $product_title, (int) $posts[$key]['sales']['quantity'], (float) $posts[$key]['sales']['total'] );
 				}
+			}
 
-			echo json_encode($posts);
+			if( $to_download ){
+			
+				$as_of_date = $startDate. ' to '.$endDate;
+				$csv_result[] = array( 'Total Sales as of '.$as_of_date, $sales_qty, $sales_amt);
+
+				$filename = $taxonomy .'-'. preg_replace( "![^a-z0-9]+!i", '-', strtolower( $category_name ) );
+
+				$this->generateCsv( $csv_result, $filename );
+			}
+
+			if( !$to_download ){
+				
+				echo json_encode($posts);
+			}
+
 		} else {
 			
 			return false;
@@ -381,14 +425,18 @@ class Cruclub_Reports_Controller {
 
 		$filename = ( empty( $filename ) ? 'exports' : $filename ) . '.csv';
 
-		error_log(print_r($filename, true));
+		error_log(print_r('Downloading file '.$filename, true));
 
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header('Content-Description: File Transfer');
-		header("Content-type: text/csv");
-		header("Content-Disposition: attachment; filename=". $filename);
-		header("Expires: 0");
-		header("Pragma: public");
+		header("Cache-Control: max-age=0, no-cache, must-revalidate, proxy-revalidate");
+
+		// force download  
+		header("Content-Type: application/force-download");
+		header("Content-Type: application/octet-stream");
+		header("Content-Type: application/download");
+
+		// disposition / encoding on response body
+		header("Content-Disposition: attachment;filename={$filename}");
+		header("Content-Transfer-Encoding: binary");
 
 		$fh = @fopen( 'php://output', 'w' );
 

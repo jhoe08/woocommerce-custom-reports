@@ -44,6 +44,7 @@
 .cru-reports-categories-tab button:hover{
 	background-color: #ffffff;
 }
+.cru-reports-all-products-tab,
 .cru-reports-category-tab{
 	display: block;
 	background-color: inherit;
@@ -143,7 +144,6 @@
 .btn.download-reports{
 
 }
-.btn.all.download-reports,
 .cru-reports-product-info.head,
 .cru-reports-category-info,
 .cru-reports-categories-head{
@@ -205,62 +205,83 @@
     padding: 0 10px;
 }
 
-/* Download Button */
-.btn.all.download-reports button{
-	width: 100%;
-	padding: 10px;
-}
-
-
-/* Not Working Yet*/
-/*.cru-reports-category-options{
-	display: none;
-}*/
-
 /* Media queries */
 
 @media (max-width: 1199px) and (min-width: 768px){
-	.cru-reports-categories-tab,
-	.cru-reports-category-sales,
+	.cru-reports-categories-tab,	
 	.cru-reports-product-sales{
 		width: 40%;
 	}
 }
 
-@media (max-width: 767px) and (min-width: 521px){
-	.cru-reports-categories-tab{
-		width: 60%;
+@media (max-width: 1024px){
+	.cru-reports-category-info{
+		display: inline-block;
+		width: 100%;
 	}
-	.cru-reports-category-sales,
-	.cru-reports-product-sales{
-		width: 40%;
+	.cru-reports-category-head{
+		width: 100%;
+	}
+	.cru-reports-category-filter{
+		width: 100%;
 	}
 
+	.cru-reports-category-filter > *{
+		display: inline-block;
+		float: left;
+		width: 33.33333%;
+	}
+}
+
+@media (max-width: 991px) and (min-width: 768px){
+	.cru-reports-category-head{
+        width: 100%;
+	}
+	.cru-reports-category-filter{
+	    width: 65vw;
+	}
+}
+
+@media (max-width: 767px){
+	.cru-reports-categories-tab{
+		width: 40%;
+	}
+	.cru-reports-categories-info{
+		width: 60%;
+	}
+	.cru-reports-category-sales p span, .cru-reports-product-sales p span{
+		font-size: 2vw;
+	}
+}
+@media (max-width: 600px){
+	.cru-reports-categories{
+		display: inline-block;
+		float: left;
+		width: 100%
+	}
+	.cru-reports-categories-tab,
+	.cru-reports-categories-info{
+		width: 100%;
+	}
+	.cru-reports-categories-tab{
+		height: 50vw;
+	}
 }
 
 @media (max-width: 520px){
 	.cru-reports-categories{
 		display: inline-block;
-		width: 100%;
+	}
+}
+
+@media (max-width: 425px){
+	.cru-reports-category-sales p span, .cru-reports-product-sales p span{
+		font-size: 12px;
 	}
 	.cru-reports-categories-tab{
-		width: 100%;
-		height: 250px;		
-	}
-	.btn.all.download-reports button{
-		width: 100%;
-		margin-bottom: 16px;
-		padding: 10px;
+	    height: 70vw;
 	}
 	.cru-reports-categories-info{
-		width: 100%;
-		height: 750px;
+		height: auto;
 	}
-	.cru-reports-category-sales,
-	.cru-reports-product-sales{
-		width: 50%;
-	}
-	.cru-reports-category-sales p span,
-	.cru-reports-product-sales p span{
-		font-size: 14px;
-	}
+}
