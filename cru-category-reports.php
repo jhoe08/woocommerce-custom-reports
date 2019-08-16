@@ -3,7 +3,7 @@
  * Plugin Name:       Cru Category Reports
  * Plugin URI:        http://cru.io
  * Description:       The CRU Category Reports
- * Version:           1.0.0
+ * Version:           1.0.3
  * Author:            CRU Team (info@cru.io)
  * Author URI:        http://cru.io/
  * License:
