@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       Cru Category Reports
+ * Plugin Name:       Cru Reports
  * Plugin URI:        http://cru.io
  * Description:       The CRU Category Reports
  * Version:           1.0.3

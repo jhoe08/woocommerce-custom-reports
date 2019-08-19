@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 class Cruclub_Reports_Controller {
 
 	// Additional Custom Taxonomy
-	const taxonomy = array( 'product_cat' );
+	const taxonomy = array( 'product_cat', 'wine_type' );
 	/**
 	 * Initialize the class and set its properties.
 	 *
@@ -81,7 +81,7 @@ class Cruclub_Reports_Controller {
 	 */
 	public function crureports_add_menu(){
 		
-		add_submenu_page( 'woocommerce', 'CRU Category Reports', 'CRU Category Reports', 'manage_options', 'cru-category-reports', array( $this, 'crureports_html_callback' ) );
+		add_submenu_page( 'woocommerce', 'CRU Reports', 'CRU Reports', 'manage_options', 'cru-reports', array( $this, 'crureports_html_callback' ) );
 	}
 
 	/**
@@ -111,7 +111,7 @@ class Cruclub_Reports_Controller {
 		echo '<div class="cru-reports-categories">';
 		echo '<div class="cru-reports-categories-tab">';
 		//echo '<div class="btn all download-reports"><button type="button" onclick="" data-json="">Download All CSV</button></div>';
-		echo '<div class="cru-reports-categories-head"><h3>'.__( 'Categories', 'cru-reports' ).'</h3><p class="cru-report-label small"><em>Included categories: (Category, Wine Type)</em></p></div>';
+		echo '<div class="cru-reports-categories-head"><h3>'.__( 'Categories', 'cru-reports' ).'</h3><p class="cru-report-label small"><em>Included categories: (Product Category, Wine Type)</em></p></div>';
 		echo '<ul class="categories">';
 
 
@@ -202,7 +202,9 @@ class Cruclub_Reports_Controller {
 		$endDate = isset( $_REQUEST['endDate'] ) ? $_REQUEST['endDate'] : false;
 		$to_download = isset( $_REQUEST['download'] ) ? $_REQUEST['download'] : false;
 
-		$this->crureports_get_products_by_category( $category_id, $taxonomy, $startDate, $endDate, $to_download );
+		$results = $this->crureports_get_products_by_category( $category_id, $taxonomy, $startDate, $endDate, $to_download );
+
+		return $results;
 
 		wp_reset_postdata();
 		die;
@@ -257,7 +259,7 @@ class Cruclub_Reports_Controller {
 		}
 
 		$products = new \WP_Query( $args );	
-
+		
 		if( $products->have_posts() ){
 				
 			$productids = array();
@@ -330,6 +332,7 @@ class Cruclub_Reports_Controller {
 
 		wp_reset_postdata();
 		die;
+
 	}
 
 	/**

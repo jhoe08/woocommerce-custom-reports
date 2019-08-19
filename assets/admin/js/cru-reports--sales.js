@@ -174,6 +174,8 @@
 					category_sales = 0,
 					total_sales = 0,
 					has_sales = 'false';
+
+				console.log( response );
 				
 				if( products.length > 0 ){
 
@@ -195,7 +197,7 @@
 
 
 				} else {
-					html = '<p class="error">No products found on this category.</p>';
+					html = '<p class="error">No \'SIMPLE\' products found on this category.</p>';
 				}
 				total_quantity_text.find('span').text( total_product_quantity );
 				total_amount_text.find('span').text( Number(total_product_amount).toFixed(2) );

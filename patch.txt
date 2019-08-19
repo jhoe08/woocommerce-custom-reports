@@ -1,8 +1,8 @@
-v1.0.0
-* Add error trapping and message
-
 v1.0.3
 * Fixed Class Stractured
 * Fixed Download buttons
 * Fixed data and values output
-* Fixed CSS
+* Removed No sales Product on Download
+
+v1.0.0
+* Add error trapping and message
