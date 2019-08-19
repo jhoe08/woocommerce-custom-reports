@@ -343,6 +343,12 @@ class Cruclub_Reports_Controller {
 	 * @return 		products_sales
 	 */
 	public function crureports_get_product_sales( $start, $end ){
+
+		if( ! class_exists('WC_Admin_Report') ){
+			
+			global $woocommerce;
+			include_once($woocommerce->plugin_path().'/includes/admin/reports/class-wc-admin-report.php');
+		} 
 		
 		$wc_report = new \WC_Admin_Report();
 		
