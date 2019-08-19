@@ -4,5 +4,11 @@ v1.0.3
 * Fixed data and values output
 * Removed No sales Product on Download
 
+v1.0.2
+* Displayed issue on the Montalto dev site
+* Added Date range functionality
+* Fixed Download CSV data
+
+
 v1.0.0
 * Add error trapping and message
