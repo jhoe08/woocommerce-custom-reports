@@ -1,6 +1,11 @@
 ( function( $ ){
 	'use strict';
 	
+  /*
+  var selected = $(this).datepicker("getDate");
+  var dateFormat = $.datepicker.formatDate("mm-dd-yyyy", selected);
+  */
+
   // Init
 	var html = '';
   var dateFrom = $('.data-crureports-from'), dateTo = $('.data-crureports-to'), dateBtn = $('.cru-reports-category-daterange');
@@ -9,33 +14,39 @@
   var date = new Date( Date.now() );
   var getFirstDate = ( '01/01/' + date.getFullYear('Y') );
   var getLastDate = ( '12/31/' + date.getFullYear('Y') );
+  var getFFormatted = '', getLFormatted = '';
+
 
   var dateFormat = "mm/dd/yy",
   from = $( "#cru-reports-daterange-from" )
     .attr( 'value', getFirstDate )
     .datepicker({
       //defaultDate: "+1w",
+      dateFormat: dateFormat,
       changeMonth: true,
       numberOfMonths: 1
     })
     .on( "change", function() {
-      from.attr( 'value', getDateFormat( getDate( this ) ) );
-      to.datepicker( "option", "minDate", getDate( this ) );
-      dateFrom.text( setMonthDay( getDate( this ) ) );
-      dateBtn.attr('data-crureports-from', getDateFormat( getDate( this ) ) );
+      getFirstDate = $(this).datepicker("getDate");
+      getFFormatted = getDateFormat(  getFirstDate );
+      to.datepicker( "option", "minDate", getFirstDate );
+      dateFrom.text( setMonthDay( getFirstDate ) );
+      dateBtn.attr('data-crureports-from', getFFormatted );
     }),
   to = $( "#cru-reports-daterange-to" )
     .attr( 'value', getLastDate )
     .datepicker({
       //defaultDate: "+1w",
+      dateFormat: dateFormat,
       changeMonth: true,
       numberOfMonths: 1
     })
     .on( "change", function() {
-      to.attr( 'value', getDateFormat( getDate( this ) ) );
-      from.datepicker( "option", "maxDate", getDate( this ) );
-      dateTo.text( setMonthDay( getDate( this ) ) );
-      dateBtn.attr('data-crureports-to', getDateFormat( getDate( this ) ) );
+      getLastDate = $(this).datepicker("getDate");
+      getLFormatted = getDateFormat(  getLastDate );
+      from.datepicker( "option", "maxDate", getLastDate );
+      dateTo.text( setMonthDay( getLastDate ) );
+      dateBtn.attr('data-crureports-to', getLFormatted );
   });
 
   var daterange = $('.cru-reports-category-daterange'), daterangeForm = $('.cru-reports-category-daterange-form');
