@@ -1,7 +1,0 @@
-
-
-# ignore .phar file
-.phar
-
-# except .gitignore
-!.gitignore
