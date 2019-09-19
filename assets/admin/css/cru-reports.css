@@ -1,0 +1,287 @@
+.cru-reports-categories *,
+.cru-reports-categories *::before,
+.cru-reports-categories *::after {
+    box-sizing: inherit;
+}
+.cru-reports-categories *:focus{
+	outline: none;
+	text-decoration: none;
+	outline-color: transparent;
+	outline-style: none;
+	box-shadow: none;
+}
+
+.cru-reports-categories{
+	display: flex;
+}
+
+.cru-reports-categories-tab{
+	float: left;
+	border: 1px solid #ccc;
+	background-color: #f1f1f1;
+	width: 20%;	
+	height: 100vh;
+	overflow: hidden;
+	overflow-y: scroll;
+	margin: 0;
+	position: relative;
+	z-index: 1;
+}
+.cru-reports-categories-tab li{
+	display: flex;
+	align-items: center;
+}
+.cru-reports-categories-tab li:hover, 
+.cru-reports-categories-tab li.active{
+	background-color: #dcdcdc;
+}
+
+.cru-reports-categories-tab button{
+    cursor: pointer;
+    border: none;
+    padding: 15px;
+}
+.cru-reports-categories-tab button:hover{
+	background-color: #ffffff;
+}
+.cru-reports-all-products-tab,
+.cru-reports-category-tab{
+	display: block;
+	background-color: inherit;
+	color: black;
+	padding: 22px 16px;
+	width: 100%;
+	border: none;
+	outline: none;
+	text-align: left;
+	cursor: pointer;
+	transition: 0.3s;
+	text-decoration: none;
+	position: relative;
+}
+.cru-reports-category-tab span{
+	float: right;
+}
+.cru-reports-category-tab span.cru-reports-taxonomy {
+    font-size: 10px;
+    position: absolute;
+    bottom: 10px;
+    left: 16px;
+}
+.cru-reports-sub-category-tab{
+	padding-left: 40px;
+}
+.cru-reports-categories-head,
+.cru-reports-category-head{
+	padding: 26px 16px;
+	/*box-shadow: 0 1px 5px grey;*/
+}
+.cru-reports-category-head{
+	width: 65vw;
+}
+.cru-reports-categories-head *,
+.cru-reports-category-head *{
+	margin: 0;
+}
+.cru-reports-category-head h3{
+	text-transform: capitalize;
+}
+.cru-reports-categories-head{
+	border-bottom: 1px solid #cccccc;
+}
+/* endof child */
+
+.cru-reports-sub-categories-tab{
+	display: none;
+}
+.cru-reports-categories-info{
+	float: left;	
+	border: 1px solid #ccc;
+	width: 80%;
+	border-left: none;
+	height: 100vh;
+	overflow: hidden;
+	overflow-y: scroll;
+	margin: 0;
+}
+.cru-reports-category-info,
+.cru-reports-product-info{
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #ccc;
+}
+
+.cru-reports-products-info{
+	padding: 0 15px;
+}
+
+.cru-reports-product-head{
+	width: 75%;
+}
+.cru-reports-category-sales,
+.cru-reports-product-sales{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-basis: auto;
+    flex: 2;
+}
+.cru-reports-category-sales p,
+.cru-reports-product-sales p{
+    border-left: 1px solid #ccc;
+    flex: 1 0 0;
+}
+.cru-reports-category-sales p:last-child,
+.cru-reports-product-sales p:last-child{
+	/*border: none;*/
+}
+.cru-reports-category-sales p span,
+.cru-reports-product-sales p span{
+	display: block;
+	font-weight: 900;	
+	font-size: 1vw;
+}
+.btn.download-reports{
+
+}
+.cru-reports-product-info.head,
+.cru-reports-category-info,
+.cru-reports-categories-head{
+    position: sticky;
+    top: 0;
+    background-color: #f1f1f1;
+    z-index: 2;
+}
+
+.cru-reports-product-info:not(.head) label{
+	display: none;
+}
+
+.cru-reports-category-daterange label,
+.cru-reports-category-options label,
+.cru-reports-category-daterange .datarange-from,
+.cru-reports-category-daterange .datarange-to{
+	display: block;
+}
+
+.cru-reports-category-filter{
+	width: 35vw;
+	display: flex;
+	align-items: center;
+	text-align: center;
+}
+.cru-reports-category-buttons{
+	/*flex: 1;*/
+}
+.cru-reports-category-daterange{
+	outline: none;
+	text-decoration: none;
+	display: block;
+    color: #000000;
+}
+.cru-reports-category-daterange:hover{
+	color: #72777c;
+}
+.cru-reports-category-daterange .dashicons{
+	transition: unset;
+}
+/* Date Range Form */
+.cru-reports-category-daterange-form{
+    position: absolute;
+    top: 90px;
+    text-align: left;
+    padding: 10px;
+    box-shadow: 0px 0px 1px #ccc;
+    right: 0;
+}
+#cru-reports-daterange-from,
+#cru-reports-daterange-to{
+	text-align: center;
+}
+
+/* has Sales */
+.cru-reports-has-sales{
+    border-left: 1px solid #ccc;
+    padding: 0 10px;
+}
+
+/* Media queries */
+
+@media (max-width: 1199px) and (min-width: 768px){
+	.cru-reports-categories-tab,	
+	.cru-reports-product-sales{
+		width: 40%;
+	}
+}
+
+@media (max-width: 1024px){
+	.cru-reports-category-info{
+		display: inline-block;
+		width: 100%;
+	}
+	.cru-reports-category-head{
+		width: 100%;
+	}
+	.cru-reports-category-filter{
+		width: 100%;
+	}
+
+	.cru-reports-category-filter > *{
+		display: inline-block;
+		float: left;
+		width: 33.33333%;
+	}
+}
+
+@media (max-width: 991px) and (min-width: 768px){
+	.cru-reports-category-head{
+        width: 100%;
+	}
+	.cru-reports-category-filter{
+	    width: 65vw;
+	}
+}
+
+@media (max-width: 767px){
+	.cru-reports-categories-tab{
+		width: 40%;
+	}
+	.cru-reports-categories-info{
+		width: 60%;
+	}
+	.cru-reports-category-sales p span, .cru-reports-product-sales p span{
+		font-size: 2vw;
+	}
+}
+@media (max-width: 600px){
+	.cru-reports-categories{
+		display: inline-block;
+		float: left;
+		width: 100%
+	}
+	.cru-reports-categories-tab,
+	.cru-reports-categories-info{
+		width: 100%;
+	}
+	.cru-reports-categories-tab{
+		height: 50vw;
+	}
+}
+
+@media (max-width: 520px){
+	.cru-reports-categories{
+		display: inline-block;
+	}
+}
+
+@media (max-width: 425px){
+	.cru-reports-category-sales p span, .cru-reports-product-sales p span{
+		font-size: 12px;
+	}
+	.cru-reports-categories-tab{
+	    height: 70vw;
+	}
+	.cru-reports-categories-info{
+		height: auto;
+	}
+}
