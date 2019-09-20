@@ -1,0 +1,324 @@
+.cru-reports{
+
+}
+
+.cru-reports *,
+.cru-reports *::before,
+.cru-reports *::after {
+    box-sizing: inherit;
+}
+.cru-reports *:focus{
+	outline: none;
+	text-decoration: none;
+	outline-color: transparent;
+	outline-style: none;
+	box-shadow: none;
+}
+.cru-reports-form{
+	display: flex;
+}
+.cru-reports-entities{
+	flex: 1;
+    padding-right: 20px;
+}
+	.cru-reports-entities > *{
+		display: inline-block;
+		width: 100%;
+	}
+.cru-reports-display{
+	flex: 3;
+}
+.cru-reports-list{
+	float: left;
+	border: 1px solid #ccc;
+	background-color: #f1f1f1;
+	overflow: hidden;
+	overflow-y: scroll;
+	margin: 0;
+	position: relative;
+	z-index: 1;
+	height: 100%;
+	width: 100%;
+	max-height: 500px;
+}
+.cru-reports-list li{
+	display: flex;
+	align-items: center;
+}
+.cru-reports-list li:hover, 
+.cru-reports-list li.active{
+	background-color: #dcdcdc;
+}
+
+.cru-reports-list button{
+    cursor: pointer;
+    border: none;
+    padding: 15px;
+}
+.cru-reports-list button:hover{
+	background-color: #ffffff;
+}
+.cru-reports-list > li > a{
+	display: block;
+	background-color: inherit;
+	color: black;
+	padding: 22px 16px;
+	width: 100%;
+	border: none;
+	outline: none;
+	text-align: left;
+	cursor: pointer;
+	transition: 0.3s;
+	text-decoration: none;
+	position: relative;
+}
+.cru-reports-list > li > a span{
+	float: right;
+}
+.cru-reports-list > li > a span.cru-reports-taxonomy{
+    font-size: 10px;
+    position: absolute;
+    bottom: 10px;
+    left: 16px;
+}
+.cru-reports-sub-category-tab{
+	padding-left: 40px;
+}
+.cru-reports-head{
+	cursor: pointer;
+}
+
+.cru-reports-head,
+.cru-reports-category-head{
+	padding: 26px 16px;
+	/*box-shadow: 0 1px 5px grey;*/
+}
+.cru-reports-category-head{
+	width: 65vw;
+}
+.cru-reports-head *,
+.cru-reports-category-head *{
+	margin: 0;
+}
+.cru-reports-category-head h3{
+	text-transform: capitalize;
+}
+/* endof child */
+/*
+	cru-reports-products-details
+*/
+.cru-reports-products-details{
+	display: flex;
+}
+.cru-reports-head,
+.cru-reports-products-head{
+	flex: 1;
+}
+.cru-reports-filter{
+	flex: 2;
+	display: flex;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+.cru-reports-filter > *:not(:first-child):not(.cru-reports-sales) {
+    width: 25%;
+}
+.cru-reports-products-head h3{
+    text-transform: capitalize;
+}
+
+/*
+	endof cru-reports-products-details
+*/
+.cru-reports-sub-categories-tab{
+	display: none;
+}
+.cru-reports-info{
+	float: left;	
+	border: 1px solid #ccc;
+	width: 80%;
+	border-left: none;
+	height: 100vh;
+	overflow: hidden;
+	overflow-y: scroll;
+	margin: 0;
+}
+.cru-reports-category-info,
+.cru-reports-product-info{
+	display: flex;
+	align-items: center;
+	border-bottom: 1px solid #ccc;
+}
+
+.cru-reports-products-info{
+	padding: 0 15px;
+}
+
+.cru-reports-product-head{
+	flex: 2;
+}
+.cru-reports-product-sales,
+.cru-reports-product-sales > *{
+	flex: 1;
+}
+.cru-reports-sales{
+	width: 50%;
+}
+.cru-reports-sales > * {
+    width: 50%;
+}
+.cru-reports-sales,
+.cru-reports-product-sales{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-basis: auto;
+}
+.cru-reports-sales p,
+.cru-reports-product-sales p{
+    border-left: 1px solid #ccc;
+}
+.cru-reports-sales p:last-child,
+.cru-reports-product-sales p:last-child{
+	/*border: none;*/
+}
+.cru-reports-sales p span,
+.cru-reports-product-sales p span{
+	display: block;
+	font-weight: 900;	
+	font-size: 1vw;
+}
+
+.cru-reports-product-info:not(.head) label{
+	display: none;
+}
+
+.cru-reports-daterange label,
+.cru-reports-options label,
+.cru-reports-daterange .datarange-from,
+.cru-reports-daterange .datarange-to{
+	display: block;
+}
+
+.cru-reports-category-buttons{
+	/*flex: 1;*/
+}
+/* Date Range Form */
+.cru-reports-daterange{
+	outline: none;
+	text-decoration: none;
+	display: block;
+    color: #000000;
+}
+.cru-reports-daterange:hover{
+	color: #72777c;
+}
+.cru-reports-daterange .dashicons{
+	transition: unset;
+}
+
+.cru-reports-daterange-form{
+    position: absolute;
+    top: 90px;
+    text-align: left;
+    padding: 10px;
+    box-shadow: 0px 0px 1px #ccc;
+}
+#cru-reports-daterange-from,
+#cru-reports-daterange-to{
+	text-align: center;
+}
+
+/* has Sales */
+.cru-reports-has-sales{
+    border-left: 1px solid #ccc;
+    padding: 0 10px;
+}
+
+/*.cru-reports-list,*/
+.cru-reports-products-lists{
+	max-height: 100vh;
+    overflow-y: scroll;
+    width: 100%;
+}
+
+/* Media queries */
+@media (max-width: 1199px) and (min-width: 768px){
+	.cru-reports-list,	
+	.cru-reports-product-sales{
+		width: 40%;
+	}
+}
+
+@media (max-width: 1024px){
+	.cru-reports-category-info{
+		display: inline-block;
+		width: 100%;
+	}
+	.cru-reports-category-head{
+		width: 100%;
+	}
+	.cru-reports-filter{
+		width: 100%;
+	}
+
+	.cru-reports-filter > *{
+		display: inline-block;
+		float: left;
+		width: 33.33333%;
+	}
+}
+
+@media (max-width: 991px) and (min-width: 768px){
+	.cru-reports-category-head{
+        width: 100%;
+	}
+	.cru-reports-filter{
+	    width: 65vw;
+	}
+}
+
+@media (max-width: 767px){
+	.cru-reports-list{
+		width: 40%;
+	}
+	.cru-reports-info{
+		width: 60%;
+	}
+	.cru-reports-sales p span, .cru-reports-product-sales p span{
+		font-size: 2vw;
+	}
+}
+@media (max-width: 600px){
+	.cru-reports{
+		display: inline-block;
+		float: left;
+		width: 100%
+	}
+	.cru-reports-list,
+	.cru-reports-info{
+		width: 100%;
+	}
+	.cru-reports-list{
+		height: 50vw;
+	}
+}
+
+@media (max-width: 520px){
+	.cru-reports{
+		display: inline-block;
+	}
+}
+
+@media (max-width: 425px){
+	.cru-reports-sales p span, .cru-reports-product-sales p span{
+		font-size: 12px;
+	}
+	.cru-reports-list{
+	    height: 70vw;
+	}
+	.cru-reports-info{
+		height: auto;
+	}
+}
